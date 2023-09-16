@@ -207,6 +207,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
+STATIC_ROOT = BASE_DIR /  'static'
 MEDIA_ROOT = BASE_DIR /  'media'
 LOCALE_PATHS = (BASE_DIR / 'locale', )
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000  # Or any other value that fits your needs
