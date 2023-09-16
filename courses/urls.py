@@ -6,6 +6,11 @@ router = DefaultRouter()
 
 router.register('categories', CategoryViewSet)
 router.register('courses', CourseViewSet)
+router.register('Article', ArticleViewset)
+
+router.register(r'comments', CommentViewSet, basename='comment')
+router.register(r'replies', ReplyViewSet, basename='reply')
+
 
 urlpatterns = [
    

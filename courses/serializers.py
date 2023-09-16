@@ -1,6 +1,9 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Course, Category
+from .models import Course, Category, Article, Tag, Reply, ArticleComment
+from parler_rest.serializers import TranslatableModelSerializer
+from config.mixin import TranslatedSerializerMixin
+from parler_rest.fields import TranslatedFieldsField
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -42,3 +45,28 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 
+class ArticleSerializer(TranslatedSerializerMixin, TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=Article, read_only=True)
+
+    class Meta:
+        model = Article
+        fields = ['id', 'translations', 'pic', 'views', 'tags', 'category', 'created_at']
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = '__all__'
+
+
+class ReplySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reply
+        fields = "__all__"
+
+class CommentSerializer(serializers.ModelSerializer):
+    replies = ReplySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = ArticleComment
+        fields = "__all__"

@@ -3,6 +3,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import Group, Permission
+from parler.models import TranslatableModel, TranslatedFields
 
 # Create your models here.
 
@@ -118,8 +119,10 @@ class PartnerProfile(TimeStamp):
         return self.user.email
     
 
-class TeamMember(TimeStamp):
-    pic = models.ImageField(upload_to='Team')
-    title = models.CharField(max_length=200)
+class TeamMember(TimeStamp, TranslatableModel):
+    translations = TranslatedFields(
+    title = models.CharField(max_length=200),
     desc = models.TextField()
-
+    )
+    pic = models.ImageField(upload_to='Team')
+    

@@ -6,6 +6,10 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth import authenticate
 from .models import *
 from config.utils import verify_recaptcha
+from parler_rest.serializers import TranslatableModelSerializer
+from config.mixin import TranslatedSerializerMixin 
+from parler_rest.fields import TranslatedFieldsField
+
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -243,7 +247,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return instance
     
 
-class TeamMemeberSerializer(serializers.ModelSerializer):
+class TeamMemeberSerializer(TranslatedSerializerMixin, TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=TeamMember, read_only=True)
     class Meta:
         model = TeamMember
-        fields = "__all__"
+        fields = ['id', 'translations', 'pic']
+

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # added apps
     'accounts',
+    'reservation',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'django_rest_passwordreset',
     'captcha',
+    'tinymce',
     'courses',
     'payments',
     'enrollments',
@@ -55,6 +58,7 @@ INSTALLED_APPS = [
     'submissions',
     'assignments',
     'django_filters',
+    'parler',
 
 
 ]
@@ -67,7 +71,7 @@ REST_FRAMEWORK = {
     ),
     
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ],
 }
 
@@ -99,10 +103,29 @@ SIMPLE_JWT = {
 #CROS HEADER 
 CORS_ORIGIN_ALLOW_ALL = True
 
+SITE_ID = 1
+
+# languages configuration
+PARLER_LANGUAGES = {
+    1: (
+        {'code': 'ar',},
+        {'code': 'en',},
+        {'code': 'fr',},
+        
+        
+    ),
+    'default': {
+        'fallbacks': ['ar'],
+        'hide_untranslated': False,   # Default
+    }
+}
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -185,6 +208,17 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /  'media'
+LOCALE_PATHS = (BASE_DIR / 'locale', )
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000  # Or any other value that fits your needs
+
+LANGUAGES = (
+    ('ar',_('Arabic')),
+    ('en',_('English')),
+    ('fr',_('Frensh')),
+    
+    
+)
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
