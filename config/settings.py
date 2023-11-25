@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'captcha',
     'tinymce',
+    'modeltranslation',
     'courses',
     'payments',
     'enrollments',
@@ -59,10 +60,13 @@ INSTALLED_APPS = [
     'assignments',
     'django_filters',
     'parler',
-
+    'drf_yasg',
+    'rest_framework_swagger'
 
 ]
 
+
+# Swagger Settings
 
 # REST Config
 REST_FRAMEWORK = {
@@ -73,6 +77,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 # JWT Config
@@ -220,6 +225,7 @@ LANGUAGES = (
     
 )
 
+MODELTRANSLATION_LANGUAGES = ('ar', 'en', 'fr')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

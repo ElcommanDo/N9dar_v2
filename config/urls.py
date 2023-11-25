@@ -19,14 +19,40 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from accounts.views import confirm_account_APIView
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Your API",
+      default_version='v1',
+      description="API Description",
+      terms_of_service="https://www.example.com/terms/",
+      contact=openapi.Contact(email="contact@example.com"),
+      license=openapi.License(name="MIT License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
+
+from rest_framework_swagger.views import get_swagger_view
+from django.conf.urls import url
+
+schema_view = get_swagger_view(title='Pastebin API')
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path('api/v1/', include('courses.urls')),
     path('api/v2/', include('accounts.urls')),
     path('confirm/', confirm_account_APIView, name='confirm_account_api'),
-    
+   
+    url(r'^$', schema_view),
+    # Swagger UI endpoint
+    # path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
+    # ReDoc endpoint
+    #path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]+i18n_patterns(path('admin/', admin.site.urls),)
 
 if settings.DEBUG:

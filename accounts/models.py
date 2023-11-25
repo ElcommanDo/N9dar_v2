@@ -120,9 +120,8 @@ class PartnerProfile(TimeStamp):
     
 
 class TeamMember(TimeStamp, TranslatableModel):
-    translations = TranslatedFields(
-    title = models.CharField(max_length=200),
-    desc = models.TextField()
-    )
+    #title = models.CharField(max_length=200)
+    #desc = models.TextField()
+
     pic = models.ImageField(upload_to='Team')
     

@@ -11,7 +11,7 @@ class CategorySerializer(serializers.ModelSerializer):
     courses_count = serializers.SerializerMethodField()
     class Meta:
         model = Category
-        fields = ['id', 'title', 'parent', 'children']
+        fields = ['id', 'title', 'parent', 'children', 'courses_count']
 
     def get_children(self, obj):
         children_qs = obj.children.all()
@@ -45,12 +45,11 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 
-class ArticleSerializer(TranslatedSerializerMixin, TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Article, read_only=True)
+class ArticleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ['id', 'translations', 'pic', 'views', 'tags', 'category', 'created_at']
+        fields = '__all__'
 
 
 class TagSerializer(serializers.ModelSerializer):

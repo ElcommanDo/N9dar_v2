@@ -199,35 +199,5 @@ class ChangePasswordView(generics.UpdateAPIView):
 class TeamMemberViewSet(viewsets.ModelViewSet):
     queryset = TeamMember.objects.all()
     serializer_class = TeamMemeberSerializer
-    permission_classes = [customPermssions.IsAdminOrReadOnly]
-    allowed_methods = ['GET', 'POST', 'DELETE']
-    
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-
-        # Get the instance of the created object from the serializer
-        instance = serializer.instance
-
-        # Create translations for the newly created object
-        if isinstance(instance, TranslatableModel):
-            instance.set_current_language('ar')
-            instance.title = request.data.get('title_ar')
-            instance.desc = request.data.get('desc_ar')
-            instance.save()
-
-            instance.set_current_language('en')
-            instance.title = request.data.get('title_en')
-            instance.desc = request.data.get('desc_en')
-            instance.save()
-
-            instance.set_current_language('fr')
-            instance.title = request.data.get('title_fr')
-            instance.desc = request.data.get('desc_fr')
-            instance.save()
-
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    
+    #permission_classes = [customPermssions.IsAdminOrReadOnly]
+    allowed_methods = ['GET', 'POST', 'DELETE']  

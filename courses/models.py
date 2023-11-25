@@ -32,7 +32,7 @@ class Category(TimeStamp):
         return self.courses.count()
     
 
-class Course(TimeStamp, TranslatableModel):
+class Course(TimeStamp):
     COURSE_TYPE_CHOICES = (
         ('Free', _('Free')),
         ('Paid', _('Paid')),
@@ -40,15 +40,11 @@ class Course(TimeStamp, TranslatableModel):
     
    
 
-    translations = TranslatedFields(
-    title = models.CharField(max_length=255),
-    description = models.TextField(),
-    objectives = HTMLField(),
-    curriculum = HTMLField(),
-    target_audience = HTMLField(),
-
-    
-    )
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    objectives = HTMLField()
+    curriculum = HTMLField()
+    target_audience = HTMLField()
     code = models.CharField(max_length=8, unique=True, editable=False,)
     image = models.ImageField(upload_to=get_image_upload_to, null=True, blank=True)
     cover = models.ImageField(upload_to=get_cover_upload_to, null=True, blank=True)
@@ -114,7 +110,7 @@ class Section(TimeStamp, TranslatableModel):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='sections')
 
 
-class Lesson(TimeStamp, TranslatableModel):
+class Lesson(TimeStamp):
 
     FILE_TYPE = (
         ('Power Point', _('Power Point')),
@@ -130,12 +126,8 @@ class Lesson(TimeStamp, TranslatableModel):
 
     )
 
-    translations = TranslatedFields(
-    title = models.CharField(max_length=255),
-    description = HTMLField(),
-
-    )
-
+    title = models.CharField(max_length=255)
+    description = HTMLField()
     slug = models.SlugField(unique=True, blank=True)
     video_url = models.URLField(null=True, blank=True)
     video_file = models.FileField(upload_to='lesson_videos/', null=True, blank=True)
@@ -190,12 +182,9 @@ class Tag(models.Model):
         return self.name
     
 
-class Article(TimeStamp, TranslatableModel):
-    translations = TranslatedFields(
-        title = models.CharField(max_length=220),
-        content = HTMLField()
-   
-    )
+class Article(TimeStamp):
+    title = models.CharField(max_length=220)
+    content = HTMLField()
     pic = models.ImageField(upload_to='articles')
     slug = models.SlugField(max_length=255, unique=True, default=uuid.uuid4,
                              editable=False, verbose_name=('Slug'))

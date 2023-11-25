@@ -247,9 +247,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return instance
     
 
-class TeamMemeberSerializer(TranslatedSerializerMixin, TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=TeamMember, read_only=True)
+class TeamMemeberSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeamMember
-        fields = ['id', 'translations', 'pic']
-
+        fields = "__all__"
