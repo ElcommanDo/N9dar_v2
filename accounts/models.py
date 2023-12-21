@@ -43,7 +43,7 @@ class CustomUser(AbstractUser, TimeStamp):
         ('F', 'Female'),
         ('N', 'Prefer not to say'),
     ]
-    
+    username=None
     email = models.EmailField(_("email address"), unique=True)
     full_name = models.CharField(max_length=220)
     country = models.CharField(max_length=220)

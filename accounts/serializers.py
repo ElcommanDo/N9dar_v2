@@ -26,16 +26,16 @@ class UserRegisterationSerializer(serializers.ModelSerializer):
     """
     Serializer class to serialize registration requests and create a new user.
     """
-    password2 = serializers.CharField(write_only=True, required=True)
+    #password2 = serializers.CharField(write_only=True, required=True)
     #captcha = serializers.CharField()
     class Meta:
         model = CustomUser
-        fields = ("id", "username","full_name", "email","role", "password", "password2") 
+        fields = ("id", "full_name", "email","role","mobile", "country","gender", "password") 
         extra_kwargs = {"password": {"write_only": True}}
 
     def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
+        # if attrs['password'] != attrs['password2']:
+        #     raise serializers.ValidationError({"password": "Password fields didn't match."})
         
         if CustomUser.objects.filter(email=attrs['email']).exists():
             raise serializers.ValidationError({"email": "Email already exist."})
@@ -50,7 +50,7 @@ class UserRegisterationSerializer(serializers.ModelSerializer):
     
 
     def create(self, validated_data):
-        validated_data.pop('password2')
+        #validated_data.pop('password2')
         return CustomUser.objects.create_user(**validated_data)
     
 
