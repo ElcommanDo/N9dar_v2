@@ -18,14 +18,14 @@ def create_profile(sender, instance, created, **kwargs):
         instance.is_active = True
         
 
-        subject = 'Confirm your account'
-        message = f'Hi {instance.username},\n\nPlease click on the link below to confirm your account:\n\n{settings.BASE_URL}/confirm/?confirmation_code={instance.confirmation_code}\n\nThanks for signing up!'
-        from_email = settings.DEFAULT_FROM_EMAIL
-        recipient_list = [instance.email]
-        try:
-            send_mail(subject, message, from_email, recipient_list)
-        except:
-            pass
+        # subject = 'Confirm your account'
+        # message = f'Hi {instance.username},\n\nPlease click on the link below to confirm your account:\n\n{settings.BASE_URL}/confirm/?confirmation_code={instance.confirmation_code}\n\nThanks for signing up!'
+        # from_email = settings.DEFAULT_FROM_EMAIL
+        # recipient_list = [instance.email]
+        # try:
+        #     send_mail(subject, message, from_email, recipient_list)
+        # except:
+        #     pass
 
         if instance.role == 'admin':
             AdminProfile.objects.create(user=instance)
